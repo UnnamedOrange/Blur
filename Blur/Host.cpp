@@ -25,9 +25,7 @@ LRESULT CALLBACK Host::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lP
 		if (false) {}
 		else if (message == WM_ACTIVATEHOST)
 		{
-			HWND hwndFirst = container.begin()->first->GetHwnd();
-			SetForegroundWindow(hwndFirst);
-			SetFocus(hwndFirst);
+			NewWindow();
 		}
 		else
 			return DefWindowProcW(hwnd, message, wParam, lParam);
@@ -42,4 +40,6 @@ VOID Host::NewWindow()
 	t->Create();
 	ShowWindow(t->GetHwnd(), SW_SHOW);
 	UpdateWindow(t->GetHwnd());
+	SetForegroundWindow(t->GetHwnd());
+	SetFocus(t->GetHwnd());
 }

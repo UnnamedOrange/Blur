@@ -172,12 +172,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Picture Control.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="class\base.h" />
+    <ClInclude Include="class\Gauss Blur.h" />
     <ClInclude Include="Host.h" />
     <ClInclude Include="Main Window.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Picture Control.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

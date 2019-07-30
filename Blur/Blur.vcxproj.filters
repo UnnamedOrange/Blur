@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="头文件\class">
+      <UniqueIdentifier>{3baeba32-7792-410c-ad22-5da60b386ebb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -25,6 +28,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Main Window.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Picture Control.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -42,6 +48,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Main Window.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="class\Gauss Blur.h">
+      <Filter>头文件\class</Filter>
+    </ClInclude>
+    <ClInclude Include="class\base.h">
+      <Filter>头文件\class</Filter>
+    </ClInclude>
+    <ClInclude Include="Picture Control.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
