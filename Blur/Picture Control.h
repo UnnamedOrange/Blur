@@ -4,7 +4,7 @@
 
 class PictureControl : public TWindowChild
 {
-	virtual LRESULT WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
+	virtual LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) override;
 	BOOL OnCreate(HWND hwnd, LPCREATESTRUCT lpCreateStruct);
 
 private:
@@ -23,8 +23,6 @@ private:
 	HBITMAP hCrtBitmap = nullptr;
 public:
 	BOOL OpenPicture(const std::wstring& strPath);
-	HBITMAP DuplicateCrtBitmap()
-	{
-
-	}
+	VOID SetPicture(HBITMAP hBitmap);
+	HBITMAP GetPicture();
 };

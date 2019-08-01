@@ -176,6 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class\base.h" />
+    <ClInclude Include="class\Blur Collection.h" />
     <ClInclude Include="class\Gauss Blur.h" />
     <ClInclude Include="Host.h" />
     <ClInclude Include="Main Window.h" />

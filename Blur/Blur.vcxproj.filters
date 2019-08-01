@@ -59,6 +59,9 @@
     <ClInclude Include="Picture Control.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="class\Blur Collection.h">
+      <Filter>头文件\class</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">

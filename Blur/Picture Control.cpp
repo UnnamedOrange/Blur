@@ -129,3 +129,13 @@ BOOL PictureControl::OpenPicture(const std::wstring& strPath)
 	InvalidateRect(GetHwnd(), NULL, FALSE);
 	return TRUE;
 }
+VOID PictureControl::SetPicture(HBITMAP hBitmap)
+{
+	DeleteObject(hCrtBitmap);
+	hCrtBitmap = hBitmap;
+	InvalidateRect(GetHwnd(), NULL, TRUE);
+}
+HBITMAP PictureControl::GetPicture()
+{
+	return hCrtBitmap;
+}

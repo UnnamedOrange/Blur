@@ -12,6 +12,17 @@ LRESULT CALLBACK MainWindow::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPA
 	default:
 	{
 		if (false) {}
+		else if (message == WM_BLURFINISH)
+		{
+			pc.SetPicture((HBITMAP)wParam);
+			WCHAR buf[256];
+			swprintf_s(buf, L"在 %u ms 内搞完了！", (DWORD)lParam);
+			MessageBoxW(hwnd, buf, L"提示", MB_ICONINFORMATION);
+		}
+		else if (message == WM_GETPICTURE)
+		{
+			return (LRESULT)pc.GetPicture();
+		}
 		else
 			return DefWindowProcW(hwnd, message, wParam, lParam);
 		break;
@@ -67,15 +78,24 @@ VOID MainWindow::OnSize(HWND hwnd, UINT state, int cx, int cy)
 	MoveWindow(pc.GetHwnd(), iPadWidth, 0, cx - iPadWidth, cy, TRUE);
 }
 
-INT_PTR Pad::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+INT_PTR CALLBACK Pad::WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message)
 	{
 		HANDLE_MSG(hwnd, WM_INITDIALOG, OnInitDialog);
 		HANDLE_MSG(hwnd, WM_COMMAND, OnCommand);
 		HANDLE_MSG(hwnd, WM_SIZE, OnSize);
+		HANDLE_MSG(hwnd, WM_DESTROY, OnDestroy);
 	default:
-		return FALSE;
+	{
+		if (false) {}
+		else if (message == WM_BLURFINISH)
+		{
+			PostMessageW(GetParent(hwnd), WM_BLURFINISH, wParam, lParam);
+		}
+		else
+			return FALSE;
+	}
 	}
 	return TRUE;
 }
@@ -84,14 +104,48 @@ BOOL Pad::OnInitDialog(HWND hwnd, HWND hwndFocus, LPARAM lParam)
 	hwndComb = GetDlgItem(hwnd, IDC_COMBO1);
 	hwndButton_Apply = GetDlgItem(hwnd, IDC_BUTTON1);
 	hwndText_Argu = GetDlgItem(hwnd, IDC_EDIT1);
-	ComboBox_AddString(hwndComb, L"1. 高斯模糊");
+
+	for (int i = 0; i < collection.size(); i++)
+	{
+		WCHAR buf[10];
+		swprintf_s(buf, L"%d. ", i + 1);
+		ComboBox_AddString(hwndComb, (std::wstring(buf) + collection[i].GetName()).c_str());
+	}
 	ComboBox_SetCurSel(hwndComb, 0);
+	SetWindowTextW(hwndText_Argu,
+		collection[0].GetDefaultArguments().c_str());
 	return TRUE;
+}
+VOID Pad::OnDestroy(HWND hwnd)
+{
+	collection.Terminate();
 }
 VOID Pad::OnCommand(HWND hwnd, int id, HWND hwndCtl, UINT codeNotify)
 {
 	switch (id)
 	{
+	case IDC_COMBO1:
+	{
+		if (codeNotify == LBN_SELCHANGE)
+		{
+			SetWindowTextW(hwndText_Argu,
+				collection[ComboBox_GetCurSel(hwndComb)].GetDefaultArguments().c_str());
+		}
+		break;
+	}
+	case IDC_BUTTON1:
+	{
+		if (codeNotify == BN_CLICKED)
+		{
+			collection.Terminate();
+
+			std::vector<WCHAR> buf((size_t)GetWindowTextLengthW(hwndText_Argu) + 1);
+			GetWindowTextW(hwndText_Argu, buf.data(), buf.size());
+			collection[ComboBox_GetCurSel(hwndComb)].Run(buf.data(), hwnd,
+				(HBITMAP)SendMessageW(GetParent(hwnd), WM_GETPICTURE, NULL, NULL));
+		}
+		break;
+	}
 	default:
 		break;
 	}
